@@ -1,0 +1,23 @@
+{
+    "manifest_version": 3,
+    "name": "Ecole Directe Plus local Proxy",
+    "version": "0.1.0",
+    "description": "Creating a mini proxy for the website ecole-directe.plus to use EcoleDirecte's API without restrictions",
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.ecole-directe.plus/*"
+            ],
+            "js": [
+                "index.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "webRequest"
+    ],
+    "icons": {
+        "48": "icons/edp-icon.svg",
+        "96": "icons/edp-icon.svg"
+    }
+}
