@@ -6,6 +6,11 @@
 
 [Ecole Directe Plus](https://github.com/Magic-Fishes/Ecole-Directe-Plus) is a community-driven end-to-end open-source API development ecosystem.
 
+
+> [!IMPORTANT]  
+> Ecole Directe Plus extension only works for the [Ecole Directe Plus](https://ecole-directe.plus) website! If you want to use the extension anywhere outside [the official Ecole Directe Plus instance](https://ecole-directe.plus) you may want to fork the extension and edit by yourself or install the [CORS Unblock extension](https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino).
+
+
 **Haven't tried Ecole Directe Plus yet? Try it at [ecole-directe.plus](https://ecole-directe.plus)**
 
 This extension provides the following features to Ecole Directe Plus:
@@ -19,14 +24,3 @@ We use [pnpm](https://pnpm.io) as our package manager. Please install it before 
 - Run `pnpm install`
 - Run `pnpm run build:chrome` or `pnpm run build:firefox` depending on your browser to generate the *dist* folder
 - Install the extension using your browser's install options (a quick Google search will yield the methods)
-
-### Credits
-
-Huge thanks to the source project [hoppscotch-extension](https://github.com/hoppscotch/hoppscotch-extension) ❤️
-
-Contribute to Hoppscotch: <a href="https://github.com/hoppscotch/hoppscotch">https://github.com/hoppscotch/hoppscotch</a>
-
-Sponsor Hoppscotch: [OpenCollective](https://opencollective.com/hoppscotch), [Github Sponsors](https://github.com/sponsors/hoppscotch)
-
-> [!IMPORTANT]  
-> Ecole Directe Plus extension only works for Ecole Directe Plus website! If you want to use the extension anywhere outside [the official Ecole Directe Plus instance](https://ecole-directe.plus) you may want to download the original Hoppscotch extension from [Chrome web store](https://chrome.google.com/webstore/detail/hoppscotch-browser-extens/amknoiejhlmhancpahfcfcfhllgkpbld) or [Firefox add-ons](https://addons.mozilla.org/en-US/firefox/addon/hoppscotch/).
