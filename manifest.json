@@ -1,14 +1,15 @@
 {
     "manifest_version": 3,
-    "name": "Ecole Directe Plus local Proxy",
+    "name": "Ecole Directe Plus Unlock",
     "version": "0.1.0",
-    "description": "Creating a mini proxy for the website ecole-directe.plus to use EcoleDirecte's API without restrictions",
+    "description": "Ensures seamless site operation and optimal functionality on Ecole Directe Plus. Install for uninterrupted access.",
+    "homepage_url": "https://ecole-directe.plus/login",
     "declarative_net_request": {
         "rule_resources": [
             {
                 "id": "change_origin",
                 "enabled": true,
-                "path": "./netRequestRules/change_origin.json"
+                "path": "./rulesets/change_origin.json"
             }
         ]
     },
@@ -21,8 +22,17 @@
     "background": {
         "service_worker": "index.js"
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.ecoledirecte.com/*"
+            ],
+            "js": [
+                "promoteEDP.js"
+            ]
+        }
+    ],
     "icons": {
-        "48": "icons/edp-icon.svg",
-        "96": "icons/edp-icon.svg"
+        "48": "icons/EDP-logo-favicon-dark.png"
     }
 }

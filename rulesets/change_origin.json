@@ -2,6 +2,9 @@
     {
         "id": 2,
         "priority": 1,
+        "condition": {
+            "urlFilter": "||ecoledirecte.com"
+        },
         "action": {
             "type": "modifyHeaders",
             "requestHeaders": [
@@ -11,12 +14,14 @@
                     "value": "https://www.ecoledirecte.com/"
                 }
             ]
-        },
-        "condition": {}
+        }
     },
     {
         "id": 3,
         "priority": 1,
+        "condition": {
+            "urlFilter": "||ecoledirecte.com"
+        },
         "action": {
             "type": "modifyHeaders",
             "requestHeaders": [
@@ -26,7 +31,6 @@
                     "value": "https://www.ecoledirecte.com"
                 }
             ]
-        },
-        "condition": {}
+        }
     }
 ]
