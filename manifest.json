@@ -32,6 +32,10 @@
             ]
         }
     ],
+    "action": {
+        "default_title": "Ecole Directe Plus • Unlock",
+        "default_popup": "popup/popup.html"
+    },
     "icons": {
         "48": "icons/EDP-logo-favicon-dark.png"
     }

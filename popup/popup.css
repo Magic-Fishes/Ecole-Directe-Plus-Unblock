@@ -1,0 +1,27 @@
+html {
+    border-radius: 10px;
+}
+
+* {
+    box-sizing: border-box;
+    appearance: none;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    width: 350px;
+    height: 500px;
+    color: white;
+    background-color: #181829;
+    padding: 15px;
+}
+
+#canardwoman {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: #6461e1;
+}
