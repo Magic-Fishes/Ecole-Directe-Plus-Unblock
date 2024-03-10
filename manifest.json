@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Ecole Directe Plus Unlock",
+    "name": "Ecole Directe Plus Unblock",
     "version": "0.1.0",
     "description": "Ensures seamless site operation and optimal functionality on Ecole Directe Plus. Install for uninterrupted access.",
     "homepage_url": "https://ecole-directe.plus/login",
@@ -33,7 +33,7 @@
         }
     ],
     "action": {
-        "default_title": "Ecole Directe Plus • Unlock",
+        "default_title": "Ecole Directe Plus • Unblock",
         "default_popup": "popup/popup.html"
     },
     "icons": {
