@@ -1,0 +1,32 @@
+[
+    {
+        "id": 2,
+        "priority": 1,
+        "action": {
+            "type": "modifyHeaders",
+            "requestHeaders": [
+                {
+                    "operation": "set",
+                    "header": "referer",
+                    "value": "https://www.ecoledirecte.com/"
+                }
+            ]
+        },
+        "condition": {}
+    },
+    {
+        "id": 3,
+        "priority": 1,
+        "action": {
+            "type": "modifyHeaders",
+            "requestHeaders": [
+                {
+                    "operation": "set",
+                    "header": "origin",
+                    "value": "https://www.ecoledirecte.com"
+                }
+            ]
+        },
+        "condition": {}
+    }
+]
