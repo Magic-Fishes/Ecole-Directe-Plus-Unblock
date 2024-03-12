@@ -9,10 +9,16 @@ html {
     margin: 0;
 }
 
+#EDP-unblock-logo {
+    display: block;
+    margin: 5px 10px;
+    margin-bottom: 30px;
+}
+
 body {
     width: 350px;
-    height: 500px;
-    color: white;
+    /* height: 500px; */
+    color: #BBC0FF;
     background-color: #181829;
     padding: 15px;
 }
@@ -22,6 +28,61 @@ body {
 }
 
 a {
+    text-decoration: underline;
+}
+a:visited {
+    color: currentColor;
+}
+a:is(:hover, :focus-visible) {
     text-decoration: none;
-    color: #6461e1;
+}
+a:active {
+    opacity: .8;
+}
+
+#CTA {
+    display: flex;
+    flex-flow: row center;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.arrow-outline {
+    height: 25px;
+    transition: transform .1s;
+}
+a ~ .arrow-outline {
+    transform: rotate(180deg);
+}
+.arrow-outline:hover {
+    transform: translateX(4px);
+}
+a ~ .arrow-outline:hover {
+    transform: rotate(180deg) translateX(4px);
+}
+
+#about {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.social-media {
+    height: 30px;
+    transition: .1s;
+}
+
+.social-media:is(:hover, :focus-visible) {
+    transform: scale(1.2);
+}
+
+.social-media:active {
+    transform: scale(.9);
+}
+
+#socials-container {
+    margin-top: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
 }
