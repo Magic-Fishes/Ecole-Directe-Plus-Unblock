@@ -14,7 +14,8 @@
         ]
     },
     "permissions": [
-        "declarativeNetRequest"
+        "declarativeNetRequest",
+        "activeTab"
     ],
     "host_permissions": [
         "*://*.ecole-directe.plus/*",

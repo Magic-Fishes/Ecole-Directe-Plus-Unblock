@@ -61,6 +61,27 @@ a ~ .arrow-outline:hover {
     transform: rotate(180deg) translateX(4px);
 }
 
+
+#edp-unblock-status {
+    margin-top: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#status-img {
+    height: 16px;
+}
+
+#status-text.active {
+    color: #62CF7A;
+}
+#status-text.inactive {
+    color: #BDBDBD;
+}
+
 #about {
     margin-top: 30px;
     text-align: center;
@@ -80,7 +101,7 @@ a ~ .arrow-outline:hover {
 }
 
 #socials-container {
-    margin-top: 30px;
+    margin-block: 30px 10px;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
