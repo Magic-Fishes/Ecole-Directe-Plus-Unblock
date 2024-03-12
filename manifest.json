@@ -17,7 +17,7 @@
         "declarativeNetRequest"
     ],
     "host_permissions": [
-        "*://*ecole-directe.plus/*",
+        "*://*.ecole-directe.plus/*",
       "*://*ecoledirecte.com/*"
     ],
     "background": {
