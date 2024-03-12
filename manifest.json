@@ -17,7 +17,8 @@
         "declarativeNetRequest"
     ],
     "host_permissions": [
-        "<all_urls>"
+        "*://*.ecole-directe.plus/*",
+      "*://*ecoledirecte.com/*"
     ],
     "background": {
         "service_worker": "index.js"
