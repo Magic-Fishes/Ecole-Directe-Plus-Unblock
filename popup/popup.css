@@ -37,7 +37,7 @@ a:is(:hover, :focus-visible) {
     text-decoration: none;
 }
 a:active {
-    opacity: .8;
+    opacity: .7;
 }
 
 #CTA {
@@ -49,18 +49,19 @@ a:active {
 
 .arrow-outline {
     height: 25px;
-    transition: transform .1s;
+    transition: transform .2s;
+    transition-delay: calc(var(--order)*50ms);
 }
 a ~ .arrow-outline {
     transform: rotate(180deg);
 }
-.arrow-outline:hover {
-    transform: translateX(4px);
-}
-a ~ .arrow-outline:hover {
-    transform: rotate(180deg) translateX(4px);
-}
 
+#CTA:has(a:hover, a:focus-visible) > .arrow-outline {
+    transform: translateX(6px);
+}
+#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline {
+    transform: rotate(180deg) translateX(6px);
+}
 
 #edp-unblock-status {
     margin-top: 30px;
@@ -91,9 +92,12 @@ a ~ .arrow-outline:hover {
     height: 30px;
     transition: .1s;
 }
+#github-logo.social-media {
+    height: 34px;
+}
 
 .social-media:is(:hover, :focus-visible) {
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
 .social-media:active {
