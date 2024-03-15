@@ -9,10 +9,16 @@ html {
     margin: 0;
 }
 
+#EDP-unblock-logo {
+    display: block;
+    margin: 5px 10px;
+    margin-bottom: 30px;
+}
+
 body {
     width: 350px;
-    height: 500px;
-    color: white;
+    /* height: 500px; */
+    color: #BBC0FF;
     background-color: #181829;
     padding: 15px;
 }
@@ -22,6 +28,86 @@ body {
 }
 
 a {
+    text-decoration: underline;
+}
+a:visited {
+    color: currentColor;
+}
+a:is(:hover, :focus-visible) {
     text-decoration: none;
-    color: #6461e1;
+}
+a:active {
+    opacity: .7;
+}
+
+#CTA {
+    display: flex;
+    flex-flow: row center;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.arrow-outline {
+    height: 25px;
+    transition: transform .2s;
+    transition-delay: calc(var(--order)*50ms);
+}
+a ~ .arrow-outline {
+    transform: rotate(180deg);
+}
+
+#CTA:has(a:hover, a:focus-visible) > .arrow-outline {
+    transform: translateX(6px);
+}
+#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline {
+    transform: rotate(180deg) translateX(6px);
+}
+
+#edp-unblock-status {
+    margin-top: 30px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#status-img {
+    height: 16px;
+}
+
+#status-text.active {
+    color: #62CF7A;
+}
+#status-text.inactive {
+    color: #BDBDBD;
+}
+
+#about {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.social-media {
+    height: 30px;
+    transition: .1s;
+}
+#github-logo.social-media {
+    height: 34px;
+}
+
+.social-media:is(:hover, :focus-visible) {
+    transform: scale(1.15);
+}
+
+.social-media:active {
+    transform: scale(.9);
+}
+
+#socials-container {
+    margin-block: 30px 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
 }
