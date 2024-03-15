@@ -87,7 +87,7 @@ function copyDir(src, dest, browser) {
                     console.log(`Ignored hidden file: ${entry.name}`);
                     return;
                 }
-                
+
                 if (entry.isFile() && !shouldCopyFile(entry.name, browser)) {
                     console.log(`Ignored browser specific file: ${entry.name}`);
                     return;
@@ -118,7 +118,17 @@ if (process.argv.length < 3) {
 
 const browser = process.argv[2].toLowerCase();
 
-mergeManifest(browser);
-copyDir(".", `dist/${browser}`, browser)
+async function build(browser) {
+    // ensure the folders are created
+    await fs.mkdir("dist", { recursive: true }, () => { })
+    for (let supportedBrowser of supportedBrowsers) {
+        await fs.mkdir(`dist/${supportedBrowser}`, { recursive: true }, () => { });
+    }
 
-console.log(`${browser} extension successfully built`);
+    mergeManifest(browser);
+    copyDir(".", `dist/${browser}`, browser)
+    setTimeout(() => console.log(`${browser} extension successfully built`), 100); // currently broken
+}
+
+build(browser);
+
