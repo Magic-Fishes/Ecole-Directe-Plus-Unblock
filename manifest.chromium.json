@@ -1,0 +1,19 @@
+{
+    "manifest_version": 3,
+    "permissions": [
+        "declarativeNetRequest",
+        "activeTab"
+    ],
+    "background": {
+        "service_worker": "index.chromium.js"
+    },
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "change_origin",
+                "enabled": true,
+                "path": "./rulesets/change_origin.json"
+            }
+        ]
+    }
+}

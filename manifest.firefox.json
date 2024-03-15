@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "activeTab"
+    ],
+    "background": {
+        "scripts": ["index.firefox.js"]
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "edp-unblock-firefox@ecole-directe.plus"
+        }
+    }
+}

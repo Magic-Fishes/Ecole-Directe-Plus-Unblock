@@ -1,29 +1,13 @@
 {
-    "manifest_version": 3,
     "name": "Ecole Directe Plus Unblock",
     "version": "0.1.0",
     "description": "Ensures seamless site operation and optimal functionality on Ecole Directe Plus. Install for uninterrupted access.",
     "homepage_url": "https://ecole-directe.plus/login",
-    "declarative_net_request": {
-        "rule_resources": [
-            {
-                "id": "change_origin",
-                "enabled": true,
-                "path": "./rulesets/change_origin.json"
-            }
-        ]
-    },
-    "permissions": [
-        "declarativeNetRequest",
-        "activeTab"
-    ],
+
     "host_permissions": [
         "*://*.ecole-directe.plus/*",
         "*://*.ecoledirecte.com/*"
     ],
-    "background": {
-        "service_worker": "index.js"
-    },
     "content_scripts": [
         {
             "matches": [
