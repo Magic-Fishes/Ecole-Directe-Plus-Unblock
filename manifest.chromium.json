@@ -15,5 +15,9 @@
                 "path": "./rulesets/change_origin.json"
             }
         ]
+    },
+    "action": {
+        "default_title": "Ecole Directe Plus • Unblock",
+        "default_popup": "popup/popup.html"
     }
 }

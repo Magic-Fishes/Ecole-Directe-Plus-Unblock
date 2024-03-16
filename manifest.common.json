@@ -1,13 +1,9 @@
 {
     "name": "Ecole Directe Plus Unblock",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "description": "Ensures seamless site operation and optimal functionality on Ecole Directe Plus. Install for uninterrupted access.",
     "homepage_url": "https://ecole-directe.plus/login",
 
-    "host_permissions": [
-        "*://*.ecole-directe.plus/*",
-        "*://*.ecoledirecte.com/*"
-    ],
     "content_scripts": [
         {
             "matches": [
@@ -18,10 +14,6 @@
             ]
         }
     ],
-    "action": {
-        "default_title": "Ecole Directe Plus • Unblock",
-        "default_popup": "popup/popup.html"
-    },
     "icons": {
         "48": "icons/EDP-logo-favicon-dark.png"
     }

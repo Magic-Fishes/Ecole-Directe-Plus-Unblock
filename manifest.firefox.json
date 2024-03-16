@@ -3,10 +3,19 @@
     "permissions": [
         "webRequest",
         "webRequestBlocking",
-        "activeTab"
+        "*://*.ecole-directe.plus/*",
+        "*://*.ecoledirecte.com/*",
+        "tabs"
     ],
     "background": {
-        "scripts": ["index.firefox.js"]
+        "scripts": [
+            "index.firefox.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Ecole Directe Plus • Unblock",
+        "default_popup": "popup/popup.html"
     },
     "browser_specific_settings": {
         "gecko": {
