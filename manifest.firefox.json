@@ -3,9 +3,9 @@
     "permissions": [
         "webRequest",
         "webRequestBlocking",
+        "activeTab",
         "*://*.ecole-directe.plus/*",
-        "*://*.ecoledirecte.com/*",
-        "tabs"
+        "*://*.ecoledirecte.com/*"
     ],
     "background": {
         "scripts": [
