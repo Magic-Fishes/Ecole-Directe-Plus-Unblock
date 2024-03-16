@@ -1,6 +1,9 @@
-html {
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* html {
     border-radius: 10px;
-}
+} */
 
 * {
     box-sizing: border-box;
@@ -9,19 +12,22 @@ html {
     margin: 0;
 }
 
-#EDP-unblock-logo {
-    display: block;
-    margin: 5px 10px;
-    margin-bottom: 30px;
-}
-
 body {
     width: 350px;
     /* height: 500px; */
     color: #BBC0FF;
     background-color: #181829;
     padding: 15px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
 }
+
+#EDP-unblock-logo {
+    display: block;
+    margin: 5px 10px;
+    margin-bottom: 30px;
+}
+
 
 #canardwoman {
     width: 100%;
