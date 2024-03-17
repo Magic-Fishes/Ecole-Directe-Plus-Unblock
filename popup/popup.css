@@ -35,9 +35,10 @@ body {
 
 a {
     text-decoration: underline;
+    color: #BBC0FF;
 }
 a:visited {
-    color: currentColor;
+    color: #BBC0FF;
 }
 a:is(:hover, :focus-visible) {
     text-decoration: none;

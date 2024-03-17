@@ -16,7 +16,7 @@
             {
                 "id": "change_origin",
                 "enabled": true,
-                "path": "./rulesets/change_origin.json"
+                "path": "rulesets/change_origin.json"
             }
         ]
     },
