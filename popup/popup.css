@@ -57,7 +57,6 @@ a:active {
 .arrow-outline {
     height: 25px;
     transition: transform .2s;
-    transition-delay: calc(var(--order)*50ms);
 }
 a ~ .arrow-outline {
     transform: rotate(180deg);
@@ -66,8 +65,14 @@ a ~ .arrow-outline {
 #CTA:has(a:hover, a:focus-visible) > .arrow-outline {
     transform: translateX(6px);
 }
+#CTA:has(a:hover, a:focus-visible) > .arrow-outline:first-child {
+    transform: translateX(12px);
+}
 #CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline {
     transform: rotate(180deg) translateX(6px);
+}
+#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline:last-child {
+    transform: rotate(180deg) translateX(12px);
 }
 
 #edp-unblock-status {
