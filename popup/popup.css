@@ -103,17 +103,19 @@ a ~ .arrow-outline {
 .social-media {
     height: 30px;
     transition: .1s;
+    outline: none;
 }
 #github-logo.social-media {
     height: 34px;
 }
 
 .social-media:is(:hover, :focus-visible) {
-    transform: scale(1.15);
+    transform: scale(1.11) rotate(5deg);
+    filter: drop-shadow(0 0 7px #FFF8) brightness(2);
 }
 
 .social-media:active {
-    transform: scale(.9);
+    transform: scale(.95);
 }
 
 #socials-container {
