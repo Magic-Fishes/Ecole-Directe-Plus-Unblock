@@ -22,3 +22,11 @@ browser.webRequest.onBeforeSendHeaders.addListener(
     { urls: ["*://*.ecoledirecte.com/*"] },
     ["blocking", "requestHeaders"]
 );
+
+browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    if (changeInfo.status === "complete") {
+        browser.tabs.executeScript({
+            file: "DOMInjectionBridge.js"
+        });
+    }
+});

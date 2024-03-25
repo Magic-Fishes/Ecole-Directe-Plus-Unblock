@@ -2,6 +2,7 @@
     "manifest_version": 3,
     "permissions": [
         "declarativeNetRequest",
+        "scripting",
         "activeTab"
     ],
     "host_permissions": [
