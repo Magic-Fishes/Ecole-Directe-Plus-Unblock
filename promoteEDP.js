@@ -58,12 +58,12 @@ async function loadAds(path) {
 
 document.addEventListener("load", loadAds(location.pathname));
 
-(function(history){
+(function (history) {
     var pushState = history.pushState;
-    history.pushState = async function(state) {
-      pushState.apply(history, arguments);
-      await delay(50);
-      loadAds(location.pathname)
+    history.pushState = async function (state) {
+        pushState.apply(history, arguments);
+        await delay(50);
+        loadAds(location.pathname)
     };
 })(window.history);
 
