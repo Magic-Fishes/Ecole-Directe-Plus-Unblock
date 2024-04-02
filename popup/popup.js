@@ -1,9 +1,11 @@
 
+const api = typeof browser === "undefined" ? chrome : browser;
+
 const allowedDomains = ["ecole-directe.plus", "ecoledirecte.com"];
 
-async function getActiveTabDomain(callback) {
+async function getActiveTabDomain() {
     let domain;
-    await chrome.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
+    await api.tabs.query({ active: true, currentWindow: true }).then((tabs) => {
         let url = new URL(tabs[0].url);
         domain = url.hostname;
     }).catch((error) => {

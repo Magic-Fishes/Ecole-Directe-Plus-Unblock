@@ -1,6 +1,9 @@
-html {
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* html {
     border-radius: 10px;
-}
+} */
 
 * {
     box-sizing: border-box;
@@ -9,19 +12,22 @@ html {
     margin: 0;
 }
 
-#EDP-unblock-logo {
-    display: block;
-    margin: 5px 10px;
-    margin-bottom: 30px;
-}
-
 body {
     width: 350px;
     /* height: 500px; */
     color: #BBC0FF;
     background-color: #181829;
     padding: 15px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
 }
+
+#EDP-unblock-logo {
+    display: block;
+    margin: 5px 10px;
+    margin-bottom: 30px;
+}
+
 
 #canardwoman {
     width: 100%;
@@ -29,9 +35,10 @@ body {
 
 a {
     text-decoration: underline;
+    color: #BBC0FF;
 }
 a:visited {
-    color: currentColor;
+    color: #BBC0FF;
 }
 a:is(:hover, :focus-visible) {
     text-decoration: none;
@@ -50,7 +57,6 @@ a:active {
 .arrow-outline {
     height: 25px;
     transition: transform .2s;
-    transition-delay: calc(var(--order)*50ms);
 }
 a ~ .arrow-outline {
     transform: rotate(180deg);
@@ -59,8 +65,14 @@ a ~ .arrow-outline {
 #CTA:has(a:hover, a:focus-visible) > .arrow-outline {
     transform: translateX(6px);
 }
+#CTA:has(a:hover, a:focus-visible) > .arrow-outline:first-child {
+    transform: translateX(12px);
+}
 #CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline {
     transform: rotate(180deg) translateX(6px);
+}
+#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline:last-child {
+    transform: rotate(180deg) translateX(12px);
 }
 
 #edp-unblock-status {
@@ -91,17 +103,19 @@ a ~ .arrow-outline {
 .social-media {
     height: 30px;
     transition: .1s;
+    outline: none;
 }
 #github-logo.social-media {
     height: 34px;
 }
 
 .social-media:is(:hover, :focus-visible) {
-    transform: scale(1.15);
+    transform: scale(1.11) rotate(5deg);
+    filter: drop-shadow(0 0 7px #FFF8) brightness(2);
 }
 
 .social-media:active {
-    transform: scale(.9);
+    transform: scale(.95);
 }
 
 #socials-container {

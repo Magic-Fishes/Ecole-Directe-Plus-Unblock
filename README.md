@@ -22,5 +22,6 @@ This extension provides the following features to Ecole Directe Plus :
 ## Contributing
 
 - Clone the repository: `git clone https://github.com/Magic-Fishes/Ecole-Directe-Plus-Extension.git`
+- Depending on your browser, run `node build.js chromium` or `node build.js firefox`. You will find the output in `dist/`
 - Depending on your browser, go to chrome://extensions or about:debugging and enable developer mode
-- Load the unpacked extension (the browser looks for the folder where the `manifest.json` file is located)
+- Load the unpacked extension (the browser looks either for the `manifest.json` or for the folder where the `manifest.json` file is located)

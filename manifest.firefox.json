@@ -1,0 +1,25 @@
+{
+    "manifest_version": 2,
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "activeTab",
+        "*://*.ecole-directe.plus/*",
+        "*://*.ecoledirecte.com/*"
+    ],
+    "background": {
+        "scripts": [
+            "index.firefox.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Ecole Directe Plus • Unblock",
+        "default_popup": "popup/popup.html"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "edp-unblock-firefox@ecole-directe.plus"
+        }
+    }
+}
