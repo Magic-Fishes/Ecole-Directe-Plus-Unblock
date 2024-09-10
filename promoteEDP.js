@@ -43,7 +43,7 @@ async function loadAds(path) {
 
 function injectAd() {
     let adHomeHTML = `
-        <div class="item-postit col-lg-4 ng-star-inserted" id="adHome">
+        <div class="item-postit col-lg-4 ng-star-inserted" id="EDPAd">
             <span class="epingle" style="background-color: #e4e4ff;"></span>
             <div class="note-postit gestion-postit" style="background-color: #d2d2ff;">
                 <button id="closeAdBtn" style="position: absolute; top: 27px; right: 25px; background-color: transparent; border: none; font-size: 16px; color: #000; cursor: pointer;">✖</button>
@@ -63,7 +63,7 @@ function injectAd() {
 
         // Add event listener to close button
         document.getElementById('closeAdBtn').addEventListener('click', function () {
-            document.getElementById('adHome').style.display = 'none';
+            document.getElementById('EDPAd').style.display = 'none';
             localStorage.setItem('bigAds', 'false');
         });
     });
