@@ -36,24 +36,37 @@ async function loadAds(path) {
             document.querySelector(".autopromo > p").style.textAlign = "center";
             document.getElementsByClassName('autopromo')[0].insertAdjacentHTML('afterbegin', adLoginHTML);
         }
-    } else if (path.startsWith('/Eleves/') && localStorage.bigAds) { // on vérifie si l'utilisateur a accepté les pubs intrusives
-        let adHomeHTML = `
-            <div class="item-postit col-lg-4 ng-star-inserted">
-                <span class="epingle" style="background-color: #e4e4ff;"></span>
-                <div class="note-postit gestion-postit" style="background-color: #d2d2ff;">
-                    <div class="clearfix"></div>
-                    <p class="ed-cke">
-                    <span style="position: absolute; color: #fff; top: 65px; right: 43px; z-index: 1; user-select: none; font-weight: bold;">Publicité</span>
-                    <div style="padding-bottom: 56.25%; max-width: 100%; position: relative; pointer-events: none;"><iframe src="https://www.youtube.com/embed/E3mhS5UPNYk?start=1&autoplay=1&loop=1&mute=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&fs=0&playlist=E3mhS5UPNYk" width="800" height="450" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" frameborder="0"></iframe></div>
-                    <span style="color: #fff; position: relative; z-index: 10; user-select: none; font-weight: bold; text-align: center; margin-top: -20px; display: block;">Site internet non officiel</span>
-                    <span style="display: block; margin-top: 5px; text-align: center; color: #15141A; z-index: 1; user-select: none; font-weight: bold; width: 100%;">École Directe Plus n'est pas affilié à École Directe ni à la société Aplim.</span>
-                    <div class="clearfix"></div>
-                    <span class="clearfix"></span>
-                </div>
-            </div>`;
-        await waitForElm('div.liste-postit.row'); // La page prend du temps à charger
-        document.querySelector("div.liste-postit.row").insertAdjacentHTML('afterbegin', adHomeHTML);
+    } else if (path.startsWith('/Eleves/') && localStorage.bigAds === "true") {
+        injectAd();
     }
+}
+
+function injectAd() {
+    let adHomeHTML = `
+        <div class="item-postit col-lg-4 ng-star-inserted" id="adHome">
+            <span class="epingle" style="background-color: #e4e4ff;"></span>
+            <div class="note-postit gestion-postit" style="background-color: #d2d2ff;">
+                <button id="closeAdBtn" style="position: absolute; top: 27px; right: 25px; background-color: transparent; border: none; font-size: 16px; color: #000; cursor: pointer;">✖</button>
+                <div class="clearfix"></div>
+                <p class="ed-cke">
+                <span style="position: absolute; color: #fff; top: 65px; right: 43px; z-index: 1; user-select: none; font-weight: bold;">Publicité</span>
+                <div style="padding-bottom: 56.25%; max-width: 100%; position: relative; pointer-events: none;"><iframe src="https://www.youtube.com/embed/E3mhS5UPNYk?start=1&autoplay=1&loop=1&mute=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&fs=0&playlist=E3mhS5UPNYk" width="800" height="450" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" frameborder="0"></iframe></div>
+                <span style="color: #fff; position: relative; z-index: 10; user-select: none; font-weight: bold; text-align: center; margin-top: -20px; display: block;">Site internet non officiel</span>
+                <span style="display: block; margin-top: 5px; text-align: center; color: #15141A; z-index: 1; user-select: none; font-weight: bold; width: 100%;">École Directe Plus n'est pas affilié à École Directe ni à la société Aplim.</span>
+                <div class="clearfix"></div>
+                <span class="clearfix"></span>
+            </div>
+        </div>`;
+
+    waitForElm('div.liste-postit.row').then(() => {
+        document.querySelector("div.liste-postit.row").insertAdjacentHTML('afterbegin', adHomeHTML);
+
+        // Add event listener to close button
+        document.getElementById('closeAdBtn').addEventListener('click', function () {
+            document.getElementById('adHome').style.display = 'none';
+            localStorage.setItem('bigAds', 'false');
+        });
+    });
 }
 
 document.addEventListener("load", loadAds(location.pathname));
@@ -68,5 +81,14 @@ document.addEventListener("load", loadAds(location.pathname));
 })(window.history);
 
 if (!localStorage.getItem('bigAds')) {
-    localStorage.setItem('bigAds', 'false')
+    localStorage.setItem('bigAds', 'true'); // Set bigAds to true by default
 }
+
+// Listen for changes in the URL path to detect when the user logs in
+let previousPath = location.pathname;
+setInterval(() => {
+    if (location.pathname !== previousPath) {
+        previousPath = location.pathname;
+        loadAds(location.pathname);
+    }
+}, 100);
