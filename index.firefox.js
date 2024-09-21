@@ -1,9 +1,7 @@
 console.log("Service Worker v0.2 => ON")
 
-function spoofHeaders(requestDetails) {
+function changeHeaders(requestDetails) {
     let headers = requestDetails.requestHeaders;
-
-    console.log("spoofing headers...", requestDetails.url)
 
     for (let header of headers) {
         if (header.name.toLowerCase() === "referer") {
@@ -18,15 +16,7 @@ function spoofHeaders(requestDetails) {
 
 
 browser.webRequest.onBeforeSendHeaders.addListener(
-    spoofHeaders,
+    changeHeaders,
     { urls: ["*://*.ecoledirecte.com/*"] },
     ["blocking", "requestHeaders"]
 );
-
-browser.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    if (changeInfo.status === "complete") {
-        browser.tabs.executeScript({
-            file: "DOMInjectionBridge.js"
-        });
-    }
-});
