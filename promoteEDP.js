@@ -56,8 +56,8 @@ function injectAd() {
                 <p class="ed-cke">
                 <span style="position: absolute; color: #fff; top: 65px; right: 43px; z-index: 1; user-select: none; font-weight: bold;">Publicité</span>
                 <div style="padding-bottom: 56.25%; max-width: 100%; position: relative; pointer-events: none;"><iframe src="https://www.youtube.com/embed/E3mhS5UPNYk?start=1&autoplay=1&loop=1&mute=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&fs=0&playlist=E3mhS5UPNYk" width="800" height="450" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;" frameborder="0"></iframe></div>
-                <span style="color: #fff; position: relative; z-index: 10; user-select: none; font-weight: bold; text-align: center; margin-top: -20px; display: block;">Site internet non officiel</span>
-                <span style="display: block; margin-top: 5px; text-align: center; color: #15141A; z-index: 1; user-select: none; font-weight: bold; width: 100%;">École Directe Plus n'est pas affilié à École Directe ni à la société Aplim.</span>
+                <span style="color: #fff; position: relative; z-index: 10; user-select: none; font-weight: bold; text-align: center; margin-top: -20px; display: block;">Site internet non affilié</span>
+                <span style="display: block; margin-top: 5px; text-align: center; color: #15141A; z-index: 1; user-select: none; font-weight: bold; width: 100%;">Ecole Directe Plus n'est affilié ni à EcoleDirecte ni à la société Aplim.</span>
                 <div class="clearfix"></div>
                 <span class="clearfix"></span>
             </div>

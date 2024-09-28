@@ -4,6 +4,17 @@
     "description": "Assure un fonctionnement optimal du site Ecole Directe Plus. Installez pour un accès ininterrompu.",
     "homepage_url": "https://ecole-directe.plus/login",
 
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.ecoledirecte.com/*"
+            ],
+            "js": [
+                "promoteEDP.js"
+            ]
+        }
+    ],
+
     "icons": {
         "48": "icons/EDP-Unblock-logo-dark.png"
     }
