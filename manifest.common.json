@@ -12,6 +12,14 @@
             "js": [
                 "promoteEDP.js"
             ]
+        },
+        {
+            "matches": [
+                "https://ecole-directe.plus/*"
+            ],
+            "js": [
+                "removeEDPUnblockBanner.js"
+            ]
         }
     ],
 

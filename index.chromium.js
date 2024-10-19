@@ -15,3 +15,18 @@ try {
 } catch(e) {
     console.log("e", e)
 }
+
+try {
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+        if (message.type === "GET_EXTENSION_INFO") {
+            const extensionInfo = {
+                name: chrome.runtime.getManifest().name,
+                version: chrome.runtime.getManifest().version
+            };
+            sendResponse(extensionInfo);
+        }
+        return true;
+    });
+} catch(e) {
+    console.log("e", e)
+}
