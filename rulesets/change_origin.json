@@ -32,5 +32,20 @@
                 }
             ]
         }
+    },
+    {
+        "id": 4,
+        "priority": 1,
+        "action": {
+            "type": "modifyHeaders",
+            "responseHeaders": [
+                {
+                    "operation": "set",
+                    "header": "Access-Control-Allow-Origin",
+                    "value": "*"
+                }
+            ]
+        },
+        "condition": {}
     }
 ]
