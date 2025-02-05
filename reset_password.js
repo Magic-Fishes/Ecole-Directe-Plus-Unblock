@@ -13,6 +13,7 @@
       .querySelector("h3.panel-title")
       .textContent.substring(1)
       .toLowerCase();
+  document.querySelector('a').href = 'https://ecole-directe.plus/#home';
   const c = document.createElement("canvas");
   const w = img.width,
     h = img.height;
