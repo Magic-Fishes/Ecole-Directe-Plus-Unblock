@@ -1,29 +1,37 @@
 {
-    "manifest_version": 3,
-    "permissions": [
-        "declarativeNetRequest",
-        "declarativeNetRequestWithHostAccess",
-        "scripting",
-        "activeTab"
-    ],
-    "host_permissions": [
-        "*://*.ecole-directe.plus/*",
-        "*://*.ecoledirecte.com/*"
-    ],
-    "background": {
-        "service_worker": "index.chromium.js"
-    },
-    "declarative_net_request": {
-        "rule_resources": [
-            {
-                "id": "change_origin",
-                "enabled": true,
-                "path": "rulesets/change_origin.json"
-            }
-        ]
-    },
-    "action": {
-        "default_title": "Ecole Directe Plus • Unblock",
-        "default_popup": "popup/popup.html"
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.ecole-directe.plus/*",
+    "*://*.ecoledirecte.com/*",
+    "*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
+  ],
+  "background": {
+    "service_worker": "index.chromium.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://api.ecoledirecte.com/mot-de-passe-oublie.awp"],
+      "css": ["reset_password.css"],
+      "js": ["reset_password.js"]
     }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "change_origin",
+        "enabled": true,
+        "path": "rulesets/change_origin.json"
+      }
+    ]
+  },
+  "action": {
+    "default_title": "Ecole Directe Plus • Unblock",
+    "default_popup": "popup/popup.html"
+  }
 }
