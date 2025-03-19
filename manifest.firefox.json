@@ -5,7 +5,6 @@
     "webRequestBlocking",
     "activeTab",
     "*://*.ecole-directe.plus/*",
-    "*://*.ecoledirecte.com/*",
     "*://api.ecoledirecte.com/mot-de-passe-oublie"
   ],
   "background": {
