@@ -18,7 +18,8 @@
     },
     "browser_specific_settings": {
         "gecko": {
-            "id": "edp-unblock-firefox@ecole-directe.plus"
+            "id": "edpu-firefox-self-host@ecole-directe.plus",
+            "update_url": "https://unblock.ecole-directe.plus/updates.json"
         }
     }
 }
