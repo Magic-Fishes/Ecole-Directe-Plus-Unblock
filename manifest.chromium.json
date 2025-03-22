@@ -9,6 +9,7 @@
   ],
   "host_permissions": [
     "*://*.ecole-directe.plus/*",
+    "*://*.ecoledirecte.com/*",
     "*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
   ],
   "background": {
