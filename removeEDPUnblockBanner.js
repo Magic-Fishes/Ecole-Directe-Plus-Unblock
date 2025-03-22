@@ -9,10 +9,18 @@ setTimeout(() => {
                     version: response.version
                 }
             }
-            
+
             window.postMessage(message, "*");
         }
     });
-    
-    
 }, 500);
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "gtkRulesUpdated") {
+    window.postMessage({
+      type: "FROM_EXTENSION",
+      action: "gtkRulesUpdated",
+      gtk: message.gtk
+    }, "*");
+  }
+});
