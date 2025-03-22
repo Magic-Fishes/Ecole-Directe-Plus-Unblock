@@ -12,7 +12,7 @@
         "*://*.ecoledirecte.com/*"
     ],
     "background": {
-        "service_worker": "index.chromium.js"
+        "service_worker": "service-worker.js"
     },
     "declarative_net_request": {
         "rule_resources": [
