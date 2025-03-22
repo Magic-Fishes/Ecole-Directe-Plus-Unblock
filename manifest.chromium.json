@@ -4,10 +4,12 @@
         "declarativeNetRequest",
         "declarativeNetRequestWithHostAccess",
         "scripting",
-        "activeTab"
+        "activeTab",
+        "webRequest"
     ],
     "host_permissions": [
-        "*://*.ecole-directe.plus/*"
+        "*://*.ecole-directe.plus/*",
+        "*://*.ecoledirecte.com/*"
     ],
     "background": {
         "service_worker": "index.chromium.js"

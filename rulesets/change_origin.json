@@ -3,14 +3,15 @@
         "id": 2,
         "priority": 1,
         "condition": {
-            "urlFilter": "||ecoledirecte.com"
+            "urlFilter": "||ecoledirecte.com",
+            "resourceTypes": ["xmlhttprequest", "main_frame", "sub_frame"]
         },
         "action": {
             "type": "modifyHeaders",
             "requestHeaders": [
                 {
                     "operation": "set",
-                    "header": "referer",
+                    "header": "Referer",
                     "value": "https://www.ecoledirecte.com/"
                 }
             ]
@@ -20,14 +21,15 @@
         "id": 3,
         "priority": 1,
         "condition": {
-            "urlFilter": "||ecoledirecte.com"
+            "urlFilter": "||ecoledirecte.com",
+            "resourceTypes": ["xmlhttprequest", "main_frame", "sub_frame"]
         },
         "action": {
             "type": "modifyHeaders",
             "requestHeaders": [
                 {
                     "operation": "set",
-                    "header": "origin",
+                    "header": "Origin",
                     "value": "https://www.ecoledirecte.com"
                 }
             ]
@@ -36,6 +38,11 @@
     {
         "id": 4,
         "priority": 1,
+        "condition": {
+            "urlFilter": "||ecoledirecte.com",
+            "resourceTypes": ["xmlhttprequest", "main_frame", "sub_frame"],
+            "excludedInitiatorDomains": ["www.ecoledirecte.com", "ecoledirecte.com"]
+        },
         "action": {
             "type": "modifyHeaders",
             "responseHeaders": [
@@ -45,7 +52,6 @@
                     "value": "*"
                 }
             ]
-        },
-        "condition": {}
+        }
     }
 ]
