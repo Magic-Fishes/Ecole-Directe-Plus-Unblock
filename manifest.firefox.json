@@ -4,7 +4,8 @@
         "webRequest",
         "webRequestBlocking",
         "activeTab",
-        "*://*.ecole-directe.plus/*"
+        "*://*.ecole-directe.plus/*",
+        "*://*.ecoledirecte.com/*"
     ],
     "background": {
         "scripts": [
