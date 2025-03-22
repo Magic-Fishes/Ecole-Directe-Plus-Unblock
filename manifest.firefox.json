@@ -1,30 +1,44 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": [
-    "webRequest",
-    "webRequestBlocking",
-    "activeTab",
-    "*://*.ecole-directe.plus/*",
-    "*://api.ecoledirecte.com/mot-de-passe-oublie"
+      "declarativeNetRequest",
+      "declarativeNetRequestWithHostAccess",
+      "scripting",
+      "activeTab",
+      "webRequest"
+  ],
+  "host_permissions": [
+      "*://*.ecole-directe.plus/*",
+      "*://*.ecoledirecte.com/*",
+      "*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
   ],
   "background": {
-    "scripts": ["index.firefox.js"],
-    "persistent": false
+      "scripts": ["service-worker.js"]
   },
   "content_scripts": [
     {
-      "matches": ["*://api.ecoledirecte.com/mot-de-passe-oublie.awp"],
-      "css": ["reset_password.css"],
-      "js": ["reset_password.js"]
+      "matches":["*://api.ecoledirecte.com/mot-de-passe-oublie.awp"],
+      "js": ["reset_password.js"],
+      "css": ["reset_password.css"]
     }
   ],
-  "browser_action": {
-    "default_title": "Ecole Directe Plus • Unblock",
-    "default_popup": "popup/popup.html"
+  "declarative_net_request": {
+      "rule_resources": [
+          {
+              "id": "change_origin",
+              "enabled": true,
+              "path": "rulesets/change_origin.json"
+          }
+      ]
+  },
+  "action": {
+      "default_title": "Ecole Directe Plus • Unblock",
+      "default_popup": "popup/popup.html"
   },
   "browser_specific_settings": {
-    "gecko": {
-      "id": "edp-unblock-firefox@ecole-directe.plus"
-    }
+      "gecko": {
+          "id": "edpu-firefox-self-host@ecole-directe.plus",
+          "update_url": "https://unblock.ecole-directe.plus/updates.json"
+      }
   }
 }

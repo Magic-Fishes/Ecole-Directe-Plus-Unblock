@@ -4,14 +4,15 @@
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "scripting",
-    "activeTab"
+    "activeTab",
+    "webRequest"
   ],
   "host_permissions": [
     "*://*.ecole-directe.plus/*",
     "*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
   ],
   "background": {
-    "service_worker": "index.chromium.js"
+    "service_worker": "service-worker.js"
   },
   "content_scripts": [
     {
