@@ -26,10 +26,10 @@
 				"*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
 			],
 			"css": [
-				"content-scripts/reset_password.css"
+				"content-scripts/resetPassword.css"
 			],
 			"js": [
-				"content-scripts/reset_password.js"
+				"content-scripts/resetPassword.js"
 			]
 		}
 	],
