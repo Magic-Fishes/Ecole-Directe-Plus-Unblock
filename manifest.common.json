@@ -10,15 +10,16 @@
                 "https://www.ecoledirecte.com/*"
             ],
             "js": [
-                "promoteEDP.js"
+                "content-scripts/promoteEDP.js"
             ]
         },
         {
             "matches": [
-                "https://ecole-directe.plus/*"
+                "https://*.ecole-directe.plus/*"
             ],
             "js": [
-                "removeEDPUnblockBanner.js"
+                "content-scripts/handlePostMessage.js",
+                "content-scripts/removeEDPUnblockBanner.js"
             ]
         }
     ],
