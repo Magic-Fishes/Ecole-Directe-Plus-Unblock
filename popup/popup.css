@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
 /* html {
@@ -6,122 +5,131 @@
 } */
 
 * {
-    box-sizing: border-box;
-    appearance: none;
-    padding: 0;
-    margin: 0;
+	box-sizing: border-box;
+	appearance: none;
+	padding: 0;
+	margin: 0;
 }
 
 body {
-    width: 350px;
-    /* height: 500px; */
-    color: #BBC0FF;
-    background-color: #181829;
-    padding: 15px;
-    font-family: Inter, sans-serif;
-    font-size: 12px;
+	width: 350px;
+	/* height: 500px; */
+	color: #BBC0FF;
+	background-color: #181829;
+	padding: 15px;
+	font-family: Inter, sans-serif;
+	font-size: 12px;
 }
 
 #EDP-unblock-logo {
-    display: block;
-    margin: 5px 10px;
-    margin-bottom: 30px;
+	display: block;
+	margin: 5px 10px;
+	margin-bottom: 30px;
 }
 
 
 #canardwoman {
-    width: 100%;
+	width: 100%;
 }
 
 a {
-    text-decoration: underline;
-    color: #BBC0FF;
+	text-decoration: underline;
+	color: #BBC0FF;
 }
+
 a:visited {
-    color: #BBC0FF;
+	color: #BBC0FF;
 }
+
 a:is(:hover, :focus-visible) {
-    text-decoration: none;
+	text-decoration: none;
 }
+
 a:active {
-    opacity: .7;
+	opacity: .7;
 }
 
 #CTA {
-    display: flex;
-    flex-flow: row center;
-    justify-content: space-around;
-    align-items: center;
+	display: flex;
+	flex-flow: row center;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .arrow-outline {
-    height: 25px;
-    transition: transform .2s;
-}
-a ~ .arrow-outline {
-    transform: rotate(180deg);
+	height: 25px;
+	transition: transform .2s;
 }
 
-#CTA:has(a:hover, a:focus-visible) > .arrow-outline {
-    transform: translateX(6px);
+a~.arrow-outline {
+	transform: rotate(180deg);
 }
-#CTA:has(a:hover, a:focus-visible) > .arrow-outline:first-child {
-    transform: translateX(12px);
+
+#CTA:has(a:hover, a:focus-visible)>.arrow-outline {
+	transform: translateX(6px);
 }
-#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline {
-    transform: rotate(180deg) translateX(6px);
+
+#CTA:has(a:hover, a:focus-visible)>.arrow-outline:first-child {
+	transform: translateX(12px);
 }
-#CTA:has(a:hover, a:focus-visible) > a ~ .arrow-outline:last-child {
-    transform: rotate(180deg) translateX(12px);
+
+#CTA:has(a:hover, a:focus-visible)>a~.arrow-outline {
+	transform: rotate(180deg) translateX(6px);
+}
+
+#CTA:has(a:hover, a:focus-visible)>a~.arrow-outline:last-child {
+	transform: rotate(180deg) translateX(12px);
 }
 
 #edp-unblock-status {
-    margin-top: 30px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+	margin-top: 30px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 
 #status-img {
-    height: 16px;
+	height: 16px;
 }
 
 #status-text.active {
-    color: #62CF7A;
+	color: #62CF7A;
 }
+
 #status-text.inactive {
-    color: #BDBDBD;
+	color: #BDBDBD;
 }
 
 #about {
-    margin-top: 30px;
-    text-align: center;
+	margin-top: 30px;
+	text-align: center;
 }
 
 .social-media {
-    height: 30px;
-    transition: .1s;
-    outline: none;
+	height: 30px;
+	transition: .1s;
+	outline: none;
 }
+
 #github-logo.social-media {
-    height: 34px;
+	height: 34px;
 }
 
 .social-media:is(:hover, :focus-visible) {
-    transform: scale(1.11) rotate(5deg);
-    filter: drop-shadow(0 0 7px #FFF8) brightness(2);
+	transform: scale(1.11) rotate(5deg);
+	filter: drop-shadow(0 0 7px #FFF8) brightness(2);
 }
 
 .social-media:active {
-    transform: scale(.95);
+	transform: scale(.95);
 }
 
 #socials-container {
-    margin-block: 30px 10px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
-    align-items: center;
+	margin-block: 30px 10px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: center;
 }

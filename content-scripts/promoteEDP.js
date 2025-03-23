@@ -2,28 +2,28 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 
 /* Code from https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists#answer-61511955 */
 function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
-        }
+	return new Promise(resolve => {
+		if (document.querySelector(selector)) {
+			return resolve(document.querySelector(selector));
+		}
 
-        const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                observer.disconnect();
-                resolve(document.querySelector(selector));
-            }
-        });
+		const observer = new MutationObserver(mutations => {
+			if (document.querySelector(selector)) {
+				observer.disconnect();
+				resolve(document.querySelector(selector));
+			}
+		});
 
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
+		observer.observe(document.body, {
+			childList: true,
+			subtree: true
+		});
+	});
 }
 
 async function loadAds(path) {
-    if (path === "/login") {
-        let adLoginHTML = `
+	if (path === "/login") {
+		let adLoginHTML = `
             <div style="font-size: 20px; font-weight: 300; color: #fff;">
                 Vous cherchez EcoleDirecte, mais en mieux ? Jetez un coup d'oeil à Ecole Directe Plus !
                 <br>
@@ -37,17 +37,17 @@ async function loadAds(path) {
                 </a>
                 <br><br><br>
             </div>`;
-        if (document.getElementsByClassName('autopromo')[0]) {
-            document.querySelector(".autopromo > p").style.textAlign = "center";
-            document.getElementsByClassName('autopromo')[0].insertAdjacentHTML('afterbegin', adLoginHTML);
-        }
-    } else if (path.startsWith('/Eleves/') && localStorage.bigAds === "true") {
-        injectAd();
-    }
+		if (document.getElementsByClassName('autopromo')[0]) {
+			document.querySelector(".autopromo > p").style.textAlign = "center";
+			document.getElementsByClassName('autopromo')[0].insertAdjacentHTML('afterbegin', adLoginHTML);
+		}
+	} else if (path.startsWith('/Eleves/') && localStorage.bigAds === "true") {
+		injectAd();
+	}
 }
 
 function injectAd() {
-    let adHomeHTML = `
+	let adHomeHTML = `
         <div class="item-postit col-lg-4 ng-star-inserted" id="EDPAd">
             <span class="epingle" style="background-color: #e4e4ff;"></span>
             <div class="note-postit gestion-postit" style="background-color: #d2d2ff;">
@@ -63,37 +63,37 @@ function injectAd() {
             </div>
         </div>`;
 
-    waitForElm('div.liste-postit.row').then(() => {
-        document.querySelector("div.liste-postit.row").insertAdjacentHTML('afterbegin', adHomeHTML);
+	waitForElm('div.liste-postit.row').then(() => {
+		document.querySelector("div.liste-postit.row").insertAdjacentHTML('afterbegin', adHomeHTML);
 
-        // Add event listener to close button
-        document.getElementById('closeAdBtn').addEventListener('click', function () {
-            document.getElementById('EDPAd').style.display = 'none';
-            localStorage.setItem('bigAds', 'false');
-        });
-    });
+		// Add event listener to close button
+		document.getElementById('closeAdBtn').addEventListener('click', function () {
+			document.getElementById('EDPAd').style.display = 'none';
+			localStorage.setItem('bigAds', 'false');
+		});
+	});
 }
 
 document.addEventListener("load", loadAds(location.pathname));
 
 (function (history) {
-    var pushState = history.pushState;
-    history.pushState = async function (state) {
-        pushState.apply(history, arguments);
-        await delay(50);
-        loadAds(location.pathname)
-    };
+	var pushState = history.pushState;
+	history.pushState = async function (state) {
+		pushState.apply(history, arguments);
+		await delay(50);
+		loadAds(location.pathname)
+	};
 })(window.history);
 
 if (!localStorage.getItem('bigAds')) {
-    localStorage.setItem('bigAds', 'true'); // Set bigAds to true by default
+	localStorage.setItem('bigAds', 'true'); // Set bigAds to true by default
 }
 
 // Listen for changes in the URL path to detect when the user logs in
 let previousPath = location.pathname;
 setInterval(() => {
-    if (location.pathname !== previousPath) {
-        previousPath = location.pathname;
-        loadAds(location.pathname);
-    }
+	if (location.pathname !== previousPath) {
+		previousPath = location.pathname;
+		loadAds(location.pathname);
+	}
 }, 100);
