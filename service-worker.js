@@ -59,7 +59,6 @@ async function updateGtkRules(gtk) {
 	});
 
 	chrome.tabs.query({ url: ["https://*.ecole-directe.plus/*"] }, (tabs) => {
-		console.log(tabs);
 		tabs.forEach(tab => {
 			chrome.tabs.sendMessage(tab.id, {
 				action: "gtkRulesUpdated"
