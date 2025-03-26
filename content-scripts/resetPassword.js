@@ -1,21 +1,49 @@
 const injectEDPStyles = () => {
   document.documentElement.classList.add("edp");
-  const img = document.querySelector("#A7");
-  const isWhite = (value) => value > 50 && value < 256;
-  const isBlack = (value) => value > 0 && value < 50;
-  document.querySelector(
-    "div.pos2 > div.pos3 > table > tbody > tr > td > h1"
-  ).textContent = "Ecole Directe Plus";
-  document.querySelector("#A2").src =
-    "https://ecole-directe.plus/images/EDP-logo-black.svg";
-  document.querySelector("h3.panel-title").textContent =
-    document.querySelector("h3.panel-title").textContent.charAt(0) +
-    document
-      .querySelector("h3.panel-title")
-      .textContent.substring(1)
-      .toLowerCase();
-  document.querySelector("a").href = "https://ecole-directe.plus/#home";
-  const EDPifyCaptcha = () => {
+  const isWhite = (value) => value > 70 && value < 256;
+  const isBlack = (value) => value > 0 && value < 70;
+  document
+    .querySelectorAll("body > *:not(script)")
+    .forEach((e) => (e.style.display = "none"));
+  document.head.querySelectorAll("style").forEach((e) => e.remove());
+  document.head.querySelectorAll("link").forEach((e) => {
+    if (e.getAttribute("rel").includes("icon")) {
+      e.remove();
+    }
+  });
+  const page = document.createElement("main");
+  const content = `
+    <span class="back-arrow">
+      <a href="https://ecole-directe.plus/#home" title="Retour à la page d'accueil">
+        <svg class="go-back-arrow" id="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" tabindex="0" height="50px"><path d="M69.5866 90L162 90C167.523 90 172 94.4772 172 100C172 105.523 167.523 110 162 110L69.5866 110C68.6726 110 68.2376 111.125 68.9139 111.74L92.8394 133.49C96.7818 137.074 97.0405 143.187 93.4151 147.091C89.8561 150.924 83.8801 151.192 79.9924 147.693L33.6071 105.946C30.076 102.768 30.076 97.2316 33.6071 94.0536L79.9924 52.3068C83.8801 48.8079 89.8561 49.0758 93.4151 52.9086C97.0405 56.8129 96.7818 62.9256 92.8394 66.5096L68.9139 88.2601C68.2376 88.8749 68.6726 90 69.5866 90Z" fill="#FFF"></path></svg>
+      </a>
+    </span>
+      <header>
+      <section id="form-container">
+      <form>
+        <h1>Réinitialisation de votre mot de passe</h1>
+        <div class="text-input-container ">
+          <input class="text-input" type="text" placeholder="Adresse email ou numéro de téléphone" required="" autocomplete="username" value="">
+        </div>
+        <div id="image-container">
+          <img id="captcha" src="" alt="Captcha">
+          <button id="refresh" type="button">Rafraichir</button>
+        </div>
+        <div class="text-input-container">
+          <input type="text" id="captcha" placeholder="Captcha" required>
+        </div>
+        <button type="submit">Envoyer</button>
+      </form>
+      </section>
+    </header>
+  `;
+  page.innerHTML = content;
+  page.id = "main";
+  document.body.appendChild(page);
+
+  const EDPifyCaptcha = (url) => {
+    const img = new Image();
+    img.src = url || "";
     const c = document.createElement("canvas");
     const w = img.width,
       h = img.height;
@@ -34,9 +62,9 @@ const injectEDPStyles = () => {
         isWhite(pixel[p + g]) &&
         isWhite(pixel[p + b])
       ) {
-        pixel[p + r] = 24;
-        pixel[p + g] = 24;
-        pixel[p + b] = 41;
+        pixel[p + r] = 50;
+        pixel[p + g] = 50;
+        pixel[p + b] = 87;
       } else if (
         isBlack(pixel[p + r]) &&
         isBlack(pixel[p + g]) &&
@@ -49,14 +77,15 @@ const injectEDPStyles = () => {
     }
     ctx.putImageData(imageData, 0, 0);
     c.toBlob((e) => {
-      document.querySelector("#A7").src = URL.createObjectURL(e);
+      document.querySelector("#captcha").src = URL.createObjectURL(e);
     }, "image/png");
     c.remove();
   };
-  EDPifyCaptcha();
-  document.querySelector("button#A8").innerHTML =
-    '<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M5.516 14.224c-2.262-2.432-2.222-6.244.128-8.611a6.07 6.07 0 0 1 3.414-1.736L8.989 1.8a8.1 8.1 0 0 0-4.797 2.351c-3.149 3.17-3.187 8.289-.123 11.531l-1.741 1.752 5.51.301-.015-5.834zm6.647-11.959.015 5.834 2.307-2.322c2.262 2.434 2.222 6.246-.128 8.611a6.07 6.07 0 0 1-3.414 1.736l.069 2.076a8.12 8.12 0 0 0 4.798-2.35c3.148-3.172 3.186-8.291.122-11.531l1.741-1.754z"/></svg>';
-  document.querySelector("button#A8").addEventListener("click", EDPifyCaptcha);
+  EDPifyCaptcha(document.querySelector("#A7").src);
+  document.querySelector("button#refresh").addEventListener("click", () => {
+    document.querySelector("#A8").click();
+    EDPifyCaptcha(document.querySelector("#A7").src);
+  });
 };
 
 if (new URL(document.referrer).hostname.includes("ecole-directe.plus")) {
