@@ -22,11 +22,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 	return true;
 });
 
-async function updateGtkRules(gtk) {
+async function updateCookiesRules(cookies) {
 	const removeRuleIds = await chrome.declarativeNetRequest.getDynamicRules()
 		.then(rules => rules.map(rule => rule.id));
-
+	
 	const rules = [];
+	const gtk = cookies.find((cookie) => cookie.split("=")[0].toLowerCase() === "gtk").split("=")[1];
 
 	rules.push({
 		id: 10,
@@ -47,7 +48,7 @@ async function updateGtkRules(gtk) {
 				{
 					header: "Cookie",
 					operation: "set",
-					value: `GTK=${gtk}`
+					value: cookies.join(";")
 				},
 			]
 		},
@@ -73,15 +74,13 @@ function interceptCookieGTK(details) {
 	if (queryParams.get("gtk") !== "1") return;
 
 	const headers = details.responseHeaders;
+	const cookies = [];
 	for (const { name, value } of headers) {
 		if (name !== "set-cookie") continue;
-		if (!value.startsWith("GTK")) return;
-
-		const parts = value.split(";")[0];
-		const cookie = parts.split("=")[1];
-		if (cookie) {
-			updateGtkRules(cookie);
-		}
+		cookies.push(value.split(";")[0]);
+	}
+	if (cookies) {
+		updateCookiesRules(cookies);
 	}
 
 	return { responseHeaders: headers };
