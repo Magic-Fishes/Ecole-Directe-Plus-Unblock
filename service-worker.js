@@ -1,3 +1,17 @@
+function getBrowser() {
+	if (typeof chrome !== "undefined") {
+		if (typeof browser !== "undefined") {
+			return "Firefox";
+		} else {
+			return "Chrome";
+		}
+	} else {
+		return "Edge";
+	}
+}
+
+const userBrowser = getBrowser();
+
 chrome.declarativeNetRequest.updateEnabledRulesets(
 	{ enableRulesetIds: ["change_origin"] }
 )
@@ -75,8 +89,15 @@ function interceptCookieGTK(details) {
 
 	const headers = details.responseHeaders;
 	const cookies = [];
+
 	for (const { name, value } of headers) {
 		if (name !== "set-cookie") continue;
+		if (userBrowser === "Firefox") {
+			value.split("\n").forEach((cookie) => {
+				cookies.push(cookie.split(";")[0]);
+			})
+			break;
+		}
 		cookies.push(value.split(";")[0]);
 	}
 	if (cookies) {
@@ -86,20 +107,9 @@ function interceptCookieGTK(details) {
 	return { responseHeaders: headers };
 }
 
-function getBrowser() {
-	if (typeof chrome !== "undefined") {
-		if (typeof browser !== "undefined") {
-			return "Firefox";
-		} else {
-			return "Chrome";
-		}
-	} else {
-		return "Edge";
-	}
-}
 
 chrome.webRequest.onHeadersReceived.addListener(
 	interceptCookieGTK,
 	{ urls: ["*://api.ecoledirecte.com/v3/login.awp*"] },
-	getBrowser() === "Firefox" ? ["responseHeaders"] : ["responseHeaders", "extraHeaders"]
+	userBrowser === "Firefox" ? ["responseHeaders"] : ["responseHeaders", "extraHeaders"]
 );
