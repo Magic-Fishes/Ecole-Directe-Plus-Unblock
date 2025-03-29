@@ -142,7 +142,7 @@ build(browser);
 if (process.argv.includes("--watch")) {
   fs.watch(".", { recursive: true }, (eventType, filename) => {
     try {
-      if (filename.includes("dist")) return;
+      if (filename.includes("dist") || filename.startsWith(".")) return;
       console.log(
         `File ${filename} changed, rebuilding ${browser} extension...`
       );
