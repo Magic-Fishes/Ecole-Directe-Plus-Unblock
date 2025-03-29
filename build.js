@@ -42,7 +42,7 @@ function mergeManifest(browser) {
   console.log(`${browser} manifest successfully created`);
 }
 
-async function copyDir(src, dest, browser) {
+async function copyDir(src, dest, browser, silent) {
   async function shouldCopyFile(fileName, browser) {
     const blacklist = ["build.js", "README.md"];
     for (let supportedBrowser of supportedBrowsers) {
@@ -71,7 +71,8 @@ async function copyDir(src, dest, browser) {
   }
 
   if (isDangerousSubdirectory(src, dest)) {
-    console.log(`Prevent recursive bomb by ignoring: ${src} -> ${dest}`);
+    if (!silent)
+      console.log(`Prevent recursive bomb by ignoring: ${src} -> ${dest}`);
     return;
   }
 
@@ -84,26 +85,27 @@ async function copyDir(src, dest, browser) {
       const destPath = path.join(dest, entry.name);
 
       if (entry.isDirectory() && entry.name.startsWith(".")) {
-        console.log(`Ignored hidden folder: ${entry.name}`);
+        if (!silent) console.log(`Ignored hidden folder: ${entry.name}`);
         continue;
       }
 
       if (entry.isFile() && entry.name.startsWith(".")) {
-        console.log(`Ignored hidden file: ${entry.name}`);
+        if (!silent) console.log(`Ignored hidden file: ${entry.name}`);
         continue;
       }
 
       if (entry.isFile() && !shouldCopyFile(entry.name, browser)) {
-        console.log(`Ignored browser specific file: ${entry.name}`);
+        if (!silent)
+          console.log(`Ignored browser specific file: ${entry.name}`);
         continue;
       }
 
       if (entry.isDirectory()) {
-        await copyDir(srcPath, destPath, browser);
+        await copyDir(srcPath, destPath, browser, silent);
       } else {
         try {
           await fs.promises.copyFile(srcPath, destPath);
-          console.log(`File copied: ${srcPath} -> ${destPath}`);
+          if (!silent) console.log(`File copied: ${srcPath} -> ${destPath}`);
         } catch (err) {
           console.error(`Error while copying the file ${srcPath}:`, err);
         }
@@ -123,6 +125,7 @@ if (process.argv.length < 3) {
 const browser = process.argv[2].toLowerCase();
 
 async function build(browser) {
+  const silent = process.argv.includes("--silent");
   // ensure the folders are created
   fs.mkdirSync("dist", { recursive: true });
   for (let supportedBrowser of supportedBrowsers) {
@@ -130,13 +133,13 @@ async function build(browser) {
   }
 
   mergeManifest(browser);
-  await copyDir(".", `dist/${browser}`, browser);
+  await copyDir(".", `dist/${browser}`, browser, silent);
   console.log(`\x1b[32m${browser} extension successfully built\x1b[0m`);
 }
 
 build(browser);
 
-if (process.argv[3] == "--watch") {
+if (process.argv.includes("--watch")) {
   fs.watch(".", { recursive: true }, (eventType, filename) => {
     try {
       if (filename.includes("dist")) return;
