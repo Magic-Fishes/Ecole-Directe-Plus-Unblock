@@ -1,4 +1,4 @@
-const injectEDPStyles = () => {
+const injectEDPStyles = (isInvalid) => {
   document.documentElement.classList.add("edp");
   const isWhite = (value) => value > 70 && value < 256;
   const isBlack = (value) => value > 0 && value < 70;
@@ -20,6 +20,11 @@ const injectEDPStyles = () => {
     </span>
       <header>
       <section id="form-container">
+      ${
+        isInvalid
+          ? '<div id="invalid">Adresse mail, numéro de téléphone ou captcha invalide</div>'
+          : ""
+      }
       <form>
         <h1>Réinitialisation de votre mot de passe</h1>
         <div class="text-input-container ">
@@ -89,5 +94,11 @@ const injectEDPStyles = () => {
 };
 
 if (new URL(document.referrer).hostname.includes("ecole-directe.plus")) {
+  sessionStorage.setItem("isFromEDP", true); // une value pour check si on vient d'EDP prcq si on clique sur étape suivante et qu'on a pas mis les bonnes infos ça refresh et le referrer c'est plus ecole-directe.plus
   injectEDPStyles();
+} else if (
+  new URL(document.referrer).pathname === "/mot-de-passe-oublie.awp" &&
+  sessionStorage.getItem("isFromEDP")
+) {
+  injectEDPStyles(true);
 }

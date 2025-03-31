@@ -1,39 +1,27 @@
 {
-	"name": "Ecole Directe Plus Unblock",
-	"version": "0.2.6",
-	"description": "Permet le fonctionnement du site Ecole Directe Plus sur PC. Fait la passerelle entre votre ordinateur et l'API d'EcoleDirecte.",
-	"homepage_url": "https://ecole-directe.plus/login",
-	"content_scripts": [
-		{
-			"matches": [
-				"https://www.ecoledirecte.com/*"
-			],
-			"js": [
-				"content-scripts/promoteEDP.js"
-			]
-		},
-		{
-			"matches": [
-				"https://*.ecole-directe.plus/*"
-			],
-			"js": [
-				"content-scripts/handlePostMessage.js",
-				"content-scripts/removeEDPUnblockBanner.js"
-			]
-		},
-		{
-			"matches": [
-				"*://api.ecoledirecte.com/mot-de-passe-oublie.awp"
-			],
-			"css": [
-				"content-scripts/resetPassword.css"
-			],
-			"js": [
-				"content-scripts/resetPassword.js"
-			]
-		}
-	],
-	"icons": {
-		"48": "icons/EDP-Unblock-logo-dark.png"
-	}
+  "name": "Ecole Directe Plus Unblock",
+  "version": "0.2.6",
+  "description": "Permet le fonctionnement du site Ecole Directe Plus sur PC. Fait la passerelle entre votre ordinateur et l'API d'EcoleDirecte.",
+  "homepage_url": "https://ecole-directe.plus/login",
+  "content_scripts": [
+    {
+      "matches": ["https://www.ecoledirecte.com/*"],
+      "js": ["content-scripts/promoteEDP.js"]
+    },
+    {
+      "matches": ["https://*.ecole-directe.plus/*"],
+      "js": [
+        "content-scripts/handlePostMessage.js",
+        "content-scripts/removeEDPUnblockBanner.js"
+      ]
+    },
+    {
+      "matches": ["*://api.ecoledirecte.com/mot-de-passe-oublie.awp*"],
+      "css": ["content-scripts/resetPassword.css"],
+      "js": ["content-scripts/resetPassword.js"]
+    }
+  ],
+  "icons": {
+    "48": "icons/EDP-Unblock-logo-dark.png"
+  }
 }
