@@ -22,22 +22,22 @@ const injectEDPStyles = (isInvalid) => {
       <section id="form-container">
       ${
         isInvalid
-          ? '<div id="invalid">Adresse mail, numéro de téléphone ou captcha invalide</div>'
+          ? '<div class="invalid" id="email-invalid">Adresse mail, numéro de téléphone ou captcha invalide</div>'
           : ""
       }
-      <form>
+      <form id="edp">
         <h1>Réinitialisation de votre mot de passe</h1>
         <div class="text-input-container ">
-          <input class="text-input" type="text" placeholder="Adresse email ou numéro de téléphone" required="" autocomplete="username" value="">
+          <input id="email" class="text-input" type="email" placeholder="Adresse email ou numéro de téléphone" required="" autocomplete="username" value="">
         </div>
         <div id="image-container">
           <img id="captcha" src="" alt="Captcha">
           <button id="refresh" type="button">Rafraichir</button>
         </div>
         <div class="text-input-container">
-          <input type="text" id="captcha" placeholder="Captcha" required>
+          <input type="text" id="input-captcha" placeholder="Captcha" required>
         </div>
-        <button type="submit">Envoyer</button>
+        <button id="submit" type="submit">Envoyer</button>
       </form>
       </section>
     </header>
@@ -45,7 +45,11 @@ const injectEDPStyles = (isInvalid) => {
   page.innerHTML = content;
   page.id = "main";
   document.body.appendChild(page);
-
+  if (isInvalid) {
+    setTimeout(() => {
+      document.querySelector("#email-invalid").remove();
+    }, 3000);
+  }
   const EDPifyCaptcha = (url) => {
     const img = new Image();
     img.src = url || "";
@@ -86,11 +90,41 @@ const injectEDPStyles = (isInvalid) => {
     }, "image/png");
     c.remove();
   };
-  EDPifyCaptcha(document.querySelector("#A7").src);
+  //Redirect clicks and keys to the original hidden inputs
   document.querySelector("button#refresh").addEventListener("click", () => {
     document.querySelector("#A8").click();
     EDPifyCaptcha(document.querySelector("#A7").src);
   });
+  document.querySelector("#email").addEventListener("input", (e) => {
+    document.querySelector("#A4").value = e.target.value;
+  });
+
+  document.querySelector("#input-captcha").addEventListener("input", (e) => {
+    if (e.target.value.length > 5) {
+      e.preventDefault();
+      return;
+    }
+    document.querySelector("#A9").value = e.target.value;
+  });
+  document.querySelector("form#edp").addEventListener("submit", (e) => {
+    const captchaInput = document.querySelector("#input-captcha").value;
+    if (captchaInput.length <= 5) {
+      e.preventDefault();
+      const errormsg = document.createElement("div");
+      errormsg.className = "invalid";
+      errormsg.id = "captcha-invalid";
+      errormsg.textContent = "Captcha invalide";
+      setTimeout(() => {
+        errormsg.remove();
+      }, 3000);
+    }
+  });
+  const interval = setInterval(() => {
+    try {
+      EDPifyCaptcha(document.querySelector("#A7").src);
+      clearInterval(interval);
+    } catch (e) {}
+  }, 10);
 };
 
 if (new URL(document.referrer).hostname.includes("ecole-directe.plus")) {
