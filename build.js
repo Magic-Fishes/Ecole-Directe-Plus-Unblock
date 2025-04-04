@@ -26,13 +26,14 @@ function mergeManifest(browser) {
   const commonManifest = JSON.parse(
     fs.readFileSync("manifest.common.json", "utf8")
   );
+  commonManifest.name = commonManifest.name + " - Dev";
   const browserManifest = JSON.parse(
     fs.readFileSync(browserManifestFileName, "utf8")
   );
 
   // Merge both manifest, giving priority to the browser specific manifest
   const mergedManifest = { ...commonManifest, ...browserManifest };
-
+  console.log(mergedManifest);
   // `dist/${browser}/manifest.${browser}.output.json`
   fs.writeFileSync(
     `dist/${browser}/manifest.json`,
@@ -125,6 +126,7 @@ if (process.argv.length < 3) {
 const browser = process.argv[2].toLowerCase();
 
 async function build(browser) {
+  const isDev = process.argv.includes("--dev");
   const silent = process.argv.includes("--silent");
   // ensure the folders are created
   fs.mkdirSync("dist", { recursive: true });
@@ -132,7 +134,7 @@ async function build(browser) {
     fs.mkdirSync(`dist/${supportedBrowser}`, { recursive: true });
   }
 
-  mergeManifest(browser);
+  mergeManifest(browser, isDev);
   await copyDir(".", `dist/${browser}`, browser, silent);
   console.log(`\x1b[32m${browser} extension successfully built\x1b[0m`);
 }
