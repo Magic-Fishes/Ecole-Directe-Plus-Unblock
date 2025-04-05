@@ -1,6 +1,6 @@
 {
   "name": "Ecole Directe Plus Unblock",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Permet le fonctionnement du site Ecole Directe Plus sur PC. Fait la passerelle entre votre ordinateur et l'API d'EcoleDirecte.",
   "homepage_url": "https://ecole-directe.plus/login",
   "content_scripts": [
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "matches": ["*://api.ecoledirecte.com/mot-de-passe-oublie.awp*"],
+      "matches": ["*://api.ecoledirecte.com/mot-de-passe-oublie.awp"],
       "css": ["content-scripts/resetPassword.css"],
       "js": ["content-scripts/resetPassword.js"]
     }
