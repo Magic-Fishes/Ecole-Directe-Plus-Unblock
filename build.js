@@ -33,7 +33,7 @@ function mergeManifest(browser) {
 
   // Merge both manifest, giving priority to the browser specific manifest
   const mergedManifest = { ...commonManifest, ...browserManifest };
-  console.log(mergedManifest);
+
   // `dist/${browser}/manifest.${browser}.output.json`
   fs.writeFileSync(
     `dist/${browser}/manifest.json`,
