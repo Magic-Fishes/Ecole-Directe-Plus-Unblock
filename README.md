@@ -1,4 +1,4 @@
-# Ecole Directe Plus Unblock
+# Ecole Directe Plus Unblock <img src="https://raw.githubusercontent.com/Magic-Fishes/Ecole-Directe-Plus/refs/heads/main/public/images/edpu-logo.svg" width="30" />
 <!-- 
 | Chrome | Firefox |
 |---|---|
@@ -17,11 +17,13 @@ This extension provides the following features to Ecole Directe Plus :
 
 - [x] Overrides `CORS` restrictions for cross-origin requests (it allows requests against localhost).
 - [x] Bypasses the restrictions of the `Origin` and `Referer` headers from EcoleDirecte API.
+- [x] Sends back every cookie in the `Set-Cookie` header
 
 
 ## Contributing
 
 - Clone the repository: `git clone https://github.com/Magic-Fishes/Ecole-Directe-Plus-Unblock.git`
 - Depending on your browser, run `node build.js chromium` or `node build.js firefox`. You will find the output in `dist/`
+- You can also pass the `--watch` argument to build the extension when a file changes or/and the `--silent` argument to have a non-verbose output
 - Depending on your browser, go to chrome://extensions or about:debugging and enable developer mode
 - Load the unpacked extension (the browser looks either for the `manifest.json` or for the folder where the `manifest.json` file is located)
