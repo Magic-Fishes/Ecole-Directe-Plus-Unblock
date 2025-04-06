@@ -3,7 +3,7 @@ const path = require("path");
 
 const supportedBrowsers = ["chromium", "firefox"];
 
-function mergeManifest(browser) {
+function mergeManifest(browser, dev) {
   let browserManifestFileName;
 
   switch (browser) {
@@ -26,7 +26,10 @@ function mergeManifest(browser) {
   const commonManifest = JSON.parse(
     fs.readFileSync("manifest.common.json", "utf8")
   );
-  commonManifest.name = commonManifest.name + " - Dev";
+  if (dev) {
+    commonManifest.name = commonManifest.name + " - Dev";
+  }
+  
   const browserManifest = JSON.parse(
     fs.readFileSync(browserManifestFileName, "utf8")
   );
