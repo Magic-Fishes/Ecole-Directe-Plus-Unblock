@@ -7,7 +7,8 @@
 			"resourceTypes": [
 				"xmlhttprequest",
 				"main_frame",
-				"sub_frame"
+				"sub_frame",
+				"image"
 			]
 		},
 		"action": {
@@ -29,7 +30,8 @@
 			"resourceTypes": [
 				"xmlhttprequest",
 				"main_frame",
-				"sub_frame"
+				"sub_frame",
+				"image"
 			]
 		},
 		"action": {
@@ -51,7 +53,8 @@
 			"resourceTypes": [
 				"xmlhttprequest",
 				"main_frame",
-				"sub_frame"
+				"sub_frame",
+				"image"
 			],
 			"excludedInitiatorDomains": [
 				"www.ecoledirecte.com",
