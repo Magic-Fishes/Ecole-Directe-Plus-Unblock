@@ -1,59 +1,231 @@
-const injectEDPStyles = () => {
-	document.documentElement.classList.add("edp");
-	const img = document.querySelector("#A7");
-	const isWhite = (value) => value > 50 && value < 256;
-	const isBlack = (value) => value > 0 && value < 50;
-	document.querySelector(
-		"div.pos2 > div.pos3 > table > tbody > tr > td > h1"
-	).textContent = "Ecole Directe Plus";
-	document.querySelector("#A2").src =
-		"https://ecole-directe.plus/images/EDP-logo-black.svg";
-	document.querySelector("h3.panel-title").textContent =
-		document.querySelector("h3.panel-title").textContent.charAt(0) +
-		document
-			.querySelector("h3.panel-title")
-			.textContent.substring(1)
-			.toLowerCase();
-	document.querySelector('a').href = 'https://ecole-directe.plus/#home';
-	const c = document.createElement("canvas");
-	const w = img.width,
-		h = img.height;
-	c.width = w;
-	c.height = h;
-	const ctx = c.getContext("2d");
-	ctx.drawImage(img, 0, 0, w, h);
-	const imageData = ctx.getImageData(0, 0, w, h);
-	let pixel = imageData.data;
-	let r = 0,
-		g = 1,
-		b = 2;
-	for (let p = 0; p < pixel.length; p += 4) {
-		if (
-			isWhite(pixel[p + r]) &&
-			isWhite(pixel[p + g]) &&
-			isWhite(pixel[p + b])
-		) {
-			pixel[p + r] = 24;
-			pixel[p + g] = 24;
-			pixel[p + b] = 41;
-		} else if (
-			isBlack(pixel[p + r]) &&
-			isBlack(pixel[p + g]) &&
-			isBlack(pixel[p + b])
-		) {
-			pixel[p + r] = 255;
-			pixel[p + g] = 255;
-			pixel[p + b] = 255;
-		}
-	}
-	ctx.putImageData(imageData, 0, 0);
-	c.toBlob((e) => {
-		document.querySelector("#A7").src = URL.createObjectURL(e);
-	}, "image/png");
-	document.querySelector("button#A8").innerHTML =
-		'<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M5.516 14.224c-2.262-2.432-2.222-6.244.128-8.611a6.07 6.07 0 0 1 3.414-1.736L8.989 1.8a8.1 8.1 0 0 0-4.797 2.351c-3.149 3.17-3.187 8.289-.123 11.531l-1.741 1.752 5.51.301-.015-5.834zm6.647-11.959.015 5.834 2.307-2.322c2.262 2.434 2.222 6.246-.128 8.611a6.07 6.07 0 0 1-3.414 1.736l.069 2.076a8.12 8.12 0 0 0 4.798-2.35c3.148-3.172 3.186-8.291.122-11.531l1.741-1.754z"/></svg>';
+const checkEmailOrPhoneNumber = (str) =>
+  /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/.test(
+    str
+  ) || /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$/m.test(str);
+const capitalizeFirstLetter = (val) =>
+  String(val).charAt(0).toUpperCase() + String(val).slice(1);
+const isNumber = (str) => !isNaN(parseInt(str));
+function getIconTheme() {
+  const oldActiveAccount = parseInt(
+    localStorage.getItem("oldActiveAccount") ?? 0
+  );
+  const displayThemeFromLs = JSON.parse(
+    localStorage.getItem("userSettings") ?? "[{}]"
+  )[oldActiveAccount]?.displayTheme;
+  if (displayThemeFromLs === undefined || displayThemeFromLs === "auto") {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      return "dark";
+    } else {
+      return "light";
+    }
+  } else {
+    return displayThemeFromLs;
+  }
 }
+const injectEDPStyles = (isInvalid) => {
+  let iconTheme = "dark";
+  iconTheme = getIconTheme();
+  document.documentElement.classList.add("edp");
+  const isWhite = (value) => value > 70 && value < 256;
+  const isBlack = (value) => value > 0 && value < 70;
+  document
+    .querySelectorAll("body > *:not(script)")
+    .forEach((e) => (e.style.display = "none"));
+  document.head.querySelectorAll("style").forEach((e) => e.remove());
+  document.head.querySelectorAll("link").forEach((e) => {
+    if (
+      e.getAttribute("rel").includes("icon") ||
+      e.getAttribute("rel").includes("stylesheet")
+    ) {
+      e.remove();
+    }
+  });
+  const iconNode = document.createElement("link");
+  iconNode.rel = "icon";
+  iconNode.href =
+    "https://ecole-directe.plus/images/EDP-logo-favicon-" + iconTheme + ".ico";
+  document.head.appendChild(iconNode);
+  document.title = "Réinitialisation du mot de passe • Ecole Directe Plus";
+  const page = document.createElement("main");
+  const content = `
+    ${
+      isInvalid
+        ? '<div class="invalid" id="email-invalid">Adresse mail, numéro de téléphone ou captcha invalide</div>'
+        : ""
+    }
+    <span class="back-arrow">
+      <a href="https://ecole-directe.plus/#home" title="Retour à la page d'accueil">
+        <svg class="go-back-arrow" id="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none" tabindex="0" height="50px"><path d="M69.5866 90L162 90C167.523 90 172 94.4772 172 100C172 105.523 167.523 110 162 110L69.5866 110C68.6726 110 68.2376 111.125 68.9139 111.74L92.8394 133.49C96.7818 137.074 97.0405 143.187 93.4151 147.091C89.8561 150.924 83.8801 151.192 79.9924 147.693L33.6071 105.946C30.076 102.768 30.076 97.2316 33.6071 94.0536L79.9924 52.3068C83.8801 48.8079 89.8561 49.0758 93.4151 52.9086C97.0405 56.8129 96.7818 62.9256 92.8394 66.5096L68.9139 88.2601C68.2376 88.8749 68.6726 90 69.5866 90Z" fill="#FFF"></path></svg>
+      </a>
+    </span>
+      <header>
+      <section id="form-container">
+      <form id="edp">
+        <h1>Réinitialisation de votre mot de passe</h1>
+        <div class="text-input-container ">
+          <input id="email" class="text-input" type="text" placeholder="Adresse email ou numéro de téléphone" required="" value="">
+        </div>
+        <div id="image-container">
+          <img id="captcha" src="" alt="Captcha">
+          <button id="refresh" type="button">Rafraichir</button>
+        </div>
+        <div class="text-input-container">
+          <input type="text" id="input-captcha" placeholder="Captcha" required>
+        </div>
+        <button id="submit" type="submit">Envoyer</button>
+      </form>
+      </section>
+    </header>
+  `;
+  page.innerHTML = content;
+  page.id = "main";
+  document.body.appendChild(page);
+  if (isInvalid) {
+    setTimeout(() => {
+      document.querySelector("#email-invalid").remove();
+    }, 3000);
+  }
+  const EDPifyCaptcha = (url) => {
+    const img = new Image();
+    img.src = url || "";
+    const c = document.createElement("canvas");
+    const w = img.width,
+      h = img.height;
+    c.width = w;
+    c.height = h;
+    const ctx = c.getContext("2d");
+    ctx.drawImage(img, 0, 0, w, h);
+    const imageData = ctx.getImageData(0, 0, w, h);
+    let pixel = imageData.data;
+    let r = 0,
+      g = 1,
+      b = 2;
+    for (let p = 0; p < pixel.length; p += 4) {
+      if (
+        isWhite(pixel[p + r]) &&
+        isWhite(pixel[p + g]) &&
+        isWhite(pixel[p + b])
+      ) {
+        pixel[p + r] = 50;
+        pixel[p + g] = 50;
+        pixel[p + b] = 87;
+      } else if (
+        isBlack(pixel[p + r]) &&
+        isBlack(pixel[p + g]) &&
+        isBlack(pixel[p + b])
+      ) {
+        pixel[p + r] = 255;
+        pixel[p + g] = 255;
+        pixel[p + b] = 255;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    c.toBlob((e) => {
+      document.querySelector("#captcha").src = URL.createObjectURL(e);
+    }, "image/png");
+    c.remove();
+  };
+  //Redirect clicks and keys to the original hidden inputs
+  document.querySelector("button#refresh").addEventListener("click", () => {
+    document.querySelector("#A8").click();
+    const interval = setInterval(() => {
+      try {
+        EDPifyCaptcha(document.querySelector("#A7").src);
+        clearCaptchaInterval();
+      } catch (e) {}
+    }, 10);
+    function clearCaptchaInterval() {
+      clearInterval(interval);
+    }
+  });
+  document.querySelector("#email").addEventListener("input", (e) => {
+    document.querySelector("#A4").value = e.target.value;
+  });
+  document.querySelector("#input-captcha").addEventListener("input", (e) => {
+    e.preventDefault();
+    e.target.value = document.querySelector("#A9").value;
+  });
+  document.querySelector("#input-captcha").addEventListener("keydown", (e) => {
+    e.preventDefault();
+    if (
+      isNumber(e.key) &&
+      document.querySelector("#input-captcha").value.length < 5
+    ) {
+      document.querySelector("#A9").value = e.target.value + e.key;
+      document.querySelector("#input-captcha").value = e.target.value + e.key;
+    } else if (e.key === "Backspace") {
+      document.querySelector("#A9").value = e.target.value.slice(0, -1);
+      document.querySelector("#input-captcha").value = e.target.value.slice(
+        0,
+        -1
+      );
+    }
+  });
+
+  document.querySelector("form#edp").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const captchaLength = Math.max(
+      document.querySelector("#input-captcha").value.length,
+      document.querySelector("#A9").value.length
+    );
+    if (
+      captchaLength > 5 ||
+      !checkEmailOrPhoneNumber(
+        document.querySelector("#email").value.trim().toLowerCase()
+      )
+    ) {
+      const errors = [
+        "Captcha invalide",
+        "Adresse mail ou numéro de téléphone invalide, vérifiez votre saisie",
+      ];
+
+      const errorString =
+        captchaLength > 5 &&
+        !checkEmailOrPhoneNumber(
+          document.querySelector("#email").value.trim().toLowerCase()
+        )
+          ? capitalizeFirstLetter(
+              errors.map((e) => e.toLowerCase()).join(" et ")
+            )
+          : captchaLength > 5
+          ? errors[0]
+          : errors[1];
+      const errormsg = document.createElement("div");
+      errormsg.className = "invalid";
+      errormsg.id = "captcha-invalid";
+      errormsg.textContent = errorString;
+      page.appendChild(errormsg);
+      setTimeout(() => {
+        errormsg.remove();
+      }, 3000);
+      return;
+    }
+    document.querySelector("#A11").click();
+  });
+  const interval = setInterval(() => {
+    try {
+      EDPifyCaptcha(document.querySelector("#A7").src);
+      clearCaptchaInterval();
+    } catch (e) {}
+  }, 10);
+  function clearCaptchaInterval() {
+    clearInterval(interval);
+  }
+};
 
 if (new URL(document.referrer).hostname.includes("ecole-directe.plus")) {
-	injectEDPStyles();
+  sessionStorage.setItem("isFromEDP", true); // une value pour check si on vient d'EDP prcq si on clique sur étape suivante et qu'on a pas mis les bonnes infos ça refresh et le referrer c'est plus ecole-directe.plus
+  injectEDPStyles();
+} else if (
+  new URL(document.referrer).pathname === "/mot-de-passe-oublie.awp" &&
+  sessionStorage.getItem("isFromEDP")
+) {
+  injectEDPStyles(true);
 }
+
+window.addEventListener("beforeunload", () => {
+  sessionStorage.removeItem("isFromEDP");
+});

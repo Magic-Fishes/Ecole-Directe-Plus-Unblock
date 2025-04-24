@@ -1,134 +1,157 @@
-
 const fs = require("fs");
 const path = require("path");
 
-const supportedBrowsers = ["chromium", "firefox"]
+const supportedBrowsers = ["chromium", "firefox"];
 
-function mergeManifest(browser) {
-	let browserManifestFileName;
+function mergeManifest(browser, dev) {
+  let browserManifestFileName;
 
-	switch (browser) {
-		case "chromium":
-			browserManifestFileName = "manifest.chromium.json";
-			break;
-		case "firefox":
-			browserManifestFileName = "manifest.firefox.json";
-			break;
-		default:
-			console.error(`Specified browser unsupported | Supported: ${supportedBrowsers.join(", ")}`);
-			process.exit(1);
-	}
+  switch (browser) {
+    case "chromium":
+      browserManifestFileName = "manifest.chromium.json";
+      break;
+    case "firefox":
+      browserManifestFileName = "manifest.firefox.json";
+      break;
+    default:
+      console.error(
+        `Specified browser unsupported | Supported: ${supportedBrowsers.join(
+          ", "
+        )}`
+      );
+      process.exit(1);
+  }
 
-	// Load common and browser specific manifest
-	const commonManifest = JSON.parse(fs.readFileSync("manifest.common.json", "utf8"));
-	const browserManifest = JSON.parse(fs.readFileSync(browserManifestFileName, "utf8"));
+  // Load common and browser specific manifest
+  const commonManifest = JSON.parse(
+    fs.readFileSync("manifest.common.json", "utf8")
+  );
+  if (dev) {
+    commonManifest.name = commonManifest.name + " - Dev";
+  }
+  
+  const browserManifest = JSON.parse(
+    fs.readFileSync(browserManifestFileName, "utf8")
+  );
 
-	// Merge both manifest, giving priority to the browser specific manifest
-	const mergedManifest = { ...commonManifest, ...browserManifest };
+  // Merge both manifest, giving priority to the browser specific manifest
+  const mergedManifest = { ...commonManifest, ...browserManifest };
 
-	// `dist/${browser}/manifest.${browser}.output.json`
-	fs.writeFileSync(`dist/${browser}/manifest.json`, JSON.stringify(mergedManifest, null, 2));
+  // `dist/${browser}/manifest.${browser}.output.json`
+  fs.writeFileSync(
+    `dist/${browser}/manifest.json`,
+    JSON.stringify(mergedManifest, null, 2)
+  );
 
-	console.log(`${browser} manifest successfully created`);
+  console.log(`${browser} manifest successfully created`);
 }
 
+async function copyDir(src, dest, browser, silent) {
+  async function shouldCopyFile(fileName, browser) {
+    const blacklist = ["build.js", "README.md"];
+    for (let supportedBrowser of supportedBrowsers) {
+      if (supportedBrowser !== browser) {
+        if (
+          fileName.split(".").includes(supportedBrowser) ||
+          fileName.includes("manifest") ||
+          blacklist.includes(fileName)
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-function copyDir(src, dest, browser) {
-	function shouldCopyFile(fileName, browser) {
-		const blacklist = ["build.js", "README.md"]
-		for (let supportedBrowser of supportedBrowsers) {
-			if (supportedBrowser !== browser) {
-				if (fileName.split(".").includes(supportedBrowser) || fileName.includes("manifest") || blacklist.includes(fileName)) {
-					return false
-				}
-			}
-		}
+  function isDangerousSubdirectory(src, dest) {
+    const normalizedSrcPath = src.replace(/\\/g, "/");
+    const normalizedDestPath = dest.replace(/\\/g, "/");
+    const directoryOccurencies = normalizedDestPath
+      .split("/")
+      .filter((directory) =>
+        normalizedSrcPath.split("/")[0].includes(directory)
+      ).length;
+    return directoryOccurencies > 1;
+  }
 
-		return true
-	}
+  if (isDangerousSubdirectory(src, dest)) {
+    if (!silent)
+      console.log(`Prevent recursive bomb by ignoring: ${src} -> ${dest}`);
+    return;
+  }
 
-	function isDangerousSubdirectory(src, dest) {
-		const normalizedSrcPath = src.replace(/\\/g, '/');
-		const normalizedDestPath = dest.replace(/\\/g, '/');
-		const directoryOccurencies = normalizedDestPath.split("/").filter(directory => normalizedSrcPath.split("/")[0].includes(directory)).length;
-		// console.log("src:", src)
-		// console.log("dest:", dest)
-		// console.log("isDangerousSubdirectory ~ directoryOccurencies:", directoryOccurencies)
-		return directoryOccurencies > 1;
-	}
+  try {
+    await fs.promises.mkdir(dest, { recursive: true });
 
-	if (isDangerousSubdirectory(src, dest)) {
-		console.log(`Prevent recursive bomb by ignoring: ${src} -> ${dest}`);
-		return;
-	}
+    const entries = await fs.promises.readdir(src, { withFileTypes: true });
+    for (const entry of entries) {
+      const srcPath = path.join(src, entry.name);
+      const destPath = path.join(dest, entry.name);
 
-	fs.mkdir(dest, { recursive: true }, (err) => {
-		if (err) {
-			console.error(`Error while creating the folder ${dest}:`, err);
-			return;
-		}
+      if (entry.isDirectory() && entry.name.startsWith(".")) {
+        if (!silent) console.log(`Ignored hidden folder: ${entry.name}`);
+        continue;
+      }
 
-		fs.readdir(src, { withFileTypes: true }, (err, entries) => {
-			if (err) {
-				console.error(`Error while reading the folder ${src}:`, err);
-				return;
-			}
+      if (entry.isFile() && entry.name.startsWith(".")) {
+        if (!silent) console.log(`Ignored hidden file: ${entry.name}`);
+        continue;
+      }
 
-			entries.forEach((entry) => {
-				const srcPath = path.join(src, entry.name);
-				const destPath = path.join(dest, entry.name);
+      if (entry.isFile() && !shouldCopyFile(entry.name, browser)) {
+        if (!silent)
+          console.log(`Ignored browser specific file: ${entry.name}`);
+        continue;
+      }
 
-				if (entry.isDirectory() && entry.name.startsWith('.')) {
-					console.log(`Ignored hidden folder: ${entry.name}`);
-					return;
-				}
-
-				if (entry.isFile() && entry.name.startsWith('.')) {
-					console.log(`Ignored hidden file: ${entry.name}`);
-					return;
-				}
-
-				if (entry.isFile() && !shouldCopyFile(entry.name, browser)) {
-					console.log(`Ignored browser specific file: ${entry.name}`);
-					return;
-				}
-
-				if (entry.isDirectory()) {
-					copyDir(srcPath, destPath);
-				} else {
-					fs.copyFile(srcPath, destPath, (err) => {
-						if (err) {
-							console.error(`Error while copying the file ${srcPath}:`, err);
-						} else {
-							console.log(`File copied: ${srcPath} -> ${destPath}`);
-						}
-					});
-				}
-			});
-		});
-	});
+      if (entry.isDirectory()) {
+        await copyDir(srcPath, destPath, browser, silent);
+      } else {
+        try {
+          await fs.promises.copyFile(srcPath, destPath);
+          if (!silent) console.log(`File copied: ${srcPath} -> ${destPath}`);
+        } catch (err) {
+          console.error(`Error while copying the file ${srcPath}:`, err);
+        }
+      }
+    }
+  } catch (err) {
+    console.error(`Error while processing directory ${src}:`, err);
+  }
 }
-
 
 // check the target browser
 if (process.argv.length < 3) {
-	console.error("Usage: node build.js <browser>");
-	process.exit(1);
+  console.error("Usage: node build.js <browser>");
+  process.exit(1);
 }
 
 const browser = process.argv[2].toLowerCase();
 
 async function build(browser) {
-	// ensure the folders are created
-	await fs.mkdir("dist", { recursive: true }, () => { })
-	for (let supportedBrowser of supportedBrowsers) {
-		await fs.mkdir(`dist/${supportedBrowser}`, { recursive: true }, () => { });
-	}
+  const isDev = process.argv.includes("--dev");
+  const silent = process.argv.includes("--silent");
+  // ensure the folders are created
+  fs.mkdirSync("dist", { recursive: true });
+  for (let supportedBrowser of supportedBrowsers) {
+    fs.mkdirSync(`dist/${supportedBrowser}`, { recursive: true });
+  }
 
-	mergeManifest(browser);
-	copyDir(".", `dist/${browser}`, browser)
-	setTimeout(() => console.log(`${browser} extension successfully built`), 100); // currently broken
+  mergeManifest(browser, isDev);
+  await copyDir(".", `dist/${browser}`, browser, silent);
+  console.log(`\x1b[32m${browser} extension successfully built\x1b[0m`);
 }
 
 build(browser);
 
+if (process.argv.includes("--watch")) {
+  fs.watch(".", { recursive: true }, (eventType, filename) => {
+    try {
+      if (filename.includes("dist") || filename.startsWith(".")) return;
+      console.log(
+        `File ${filename} changed, rebuilding ${browser} extension...`
+      );
+      build(browser);
+    } catch (e) {}
+  });
+}
